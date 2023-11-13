@@ -1,0 +1,18 @@
+11/13
+
+# 0 # CAMTASIA
+ 
+8.7不用後製 解壓縮安裝
+2020 可以錄系統聲音
+POTPLAY 可以在錄製一次
+
+4. 阻檔啟動檢查，可用記事本修改以下檔案：(必要/重要)
+   C:\Windows\System32\drivers\etc\hosts
+   在該檔最下方加入一行：
+   127.0.0.1       activation.cloud.techsmith.com
+5. 啟動 TechSmith Camtasia Studio 8.3
+
+https://hackmd.io/@johnsonnote/webdesigncore/https%3A%2F%2Fhackmd.io%2F%40johnsonnote%2Fcross_platform_web_design_net_core
+
+# 1 #  設定sql防火牆
+# 2 #  備份資料庫介紹
