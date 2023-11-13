@@ -13,3 +13,5 @@ git push -u origin main
 git config --list
 git --help
 
+user.name=bigboy926
+user.email=2596461846@qq.com
