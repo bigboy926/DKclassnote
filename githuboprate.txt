@@ -13,5 +13,9 @@ git push -u origin main
 git config --list
 git --help
 
+git add .
+git commit -m "update2"
+
+
 user.name=bigboy926
 user.email=2596461846@qq.com

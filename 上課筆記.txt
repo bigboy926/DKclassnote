@@ -16,3 +16,72 @@ https://hackmd.io/@johnsonnote/webdesigncore/https%3A%2F%2Fhackmd.io%2F%40johnso
 
 # 1 #  設定sql防火牆
 # 2 #  備份資料庫介紹
+
+千峰前端
+https://www.bilibili.com/video/BV17z4y1D7Yj?p=32
+
+https://www.bilibili.com/video/BV1rA4y1Z7fd/
+
+3小时带你玩转jQuery+Ajax（前端开发-从入门到精通）
+https://www.bilibili.com/video/BV19L4y1v7Dy?p=15
+
+c# 11/22
+同一個exe 可以互相存取
+internal class p1
+{
+...
+}
+internal class p1
+{
+...
+}
+
+11/24
+html
+
+漸層
+
+VSCode 编辑器提供了自动对齐的功能。你可以使用快捷键 "Shift + Alt + F" 来自动格式化代码
+
+Shift + Alt + down 複製
+
+w3c school
+網頁排版
+inline-block
+float
+flex
+grid
+
+沒有預設
+內距 外距
+行內元素 span
+區塊元素 div
+
+http://books.gotop.com.tw/download/AEL022700
+
+
+
+oop
+1.抽象
+2.封裝
+3.繼承
+4.多型:
+  1.多載 overload
+  2.覆載 override
+  3.interface()
+
+泛型類別 類別產生器
+泛型方法 方法產生器
+
+https://download.csdn.net/download/ashjc/85122156?ydreferer=aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzczNDE1L2FydGljbGUvZGV0YWlscy8xMjAwOTcxNzE%3D
+
+
+
+
+
+
+
+
+
+
+
