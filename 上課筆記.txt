@@ -25,6 +25,12 @@ https://www.bilibili.com/video/BV1rA4y1Z7fd/
 3小时带你玩转jQuery+Ajax（前端开发-从入门到精通）
 https://www.bilibili.com/video/BV19L4y1v7Dy?p=15
 
+c#.NET传智播客，赵老师
+https://www.bilibili.com/video/BV1Qr4y1H7P7?p=165
+
+快学 visionpro 【visionpro与C#】
+https://www.bilibili.com/video/BV1Yr4y1D78t?p=3&vd_source=fdba2a5d1b7173729266fd6d0582c1c4
+
 c# 11/22
 同一個exe 可以互相存取
 internal class p1
@@ -74,6 +80,14 @@ oop
 泛型方法 方法產生器
 
 https://download.csdn.net/download/ashjc/85122156?ydreferer=aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzczNDE1L2FydGljbGUvZGV0YWlscy8xMjAwOTcxNzE%3D
+
+套件
+.
+.net core pack
+.net core extension pack 套件
+
+http://localhost:6060/
+設定 搜尋file files exclude 打叉
 
 
 

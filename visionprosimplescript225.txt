@@ -1,0 +1,1058 @@
+#region namespace imports
+using System;
+using System.Collections;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+using Cognex.VisionPro;
+using Cognex.VisionPro.ToolBlock;
+using Cognex.VisionPro3D;
+using Cognex.VisionPro.ImageProcessing;
+using Cognex.VisionPro.PMAlign;
+using Cognex.VisionPro.CalibFix;
+using Cognex.VisionPro.Blob;
+#endregion
+
+public class CogToolBlockSimpleScript : CogToolBlockAdvancedScript
+{
+  CogGraphicCollection Arraylist_Region = new CogGraphicCollection(); //顯示氣泡框
+  CogGraphicLabel PinNo = new CogGraphicLabel(); //定義為文字
+  ArrayList myLabel_1 = new ArrayList();  //No_1編號顯示
+  object[] Output_Item = new object[6];
+  int i;
+  public override bool GroupRun(ref string message, ref CogToolResultConstants result)
+  {
+    Arraylist_Region.Clear();
+    myLabel_1.Clear();
+    this.Outputs.Result = false;
+    i = 1;
+    if(this.Inputs.Empty ==true )
+    {
+      
+      
+      this.Tools.CogIPOneImageTool1.Run();
+      this.Tools.CogPMAlignTool1.Run();
+      //有定位到判定
+      if(this.Tools.CogPMAlignTool1.Results.Count == 1)
+      {
+        this.Tools.CogFixtureTool1.Run();
+      
+        #region 1~12blobtools運行工具
+        this.Tools.blob1.Run();
+        this.Tools.blob2.Run();
+        this.Tools.blob3.Run();
+        this.Tools.blob4.Run();
+        this.Tools.blob5.Run();
+        this.Tools.blob6.Run();
+        this.Tools.blob7.Run();
+        this.Tools.blob8.Run();
+        this.Tools.blob9.Run();
+        this.Tools.blob10.Run();
+        this.Tools.blob11.Run();
+        this.Tools.blob12.Run();
+        
+        this.Tools.sblob1.Run();
+        this.Tools.sblob2.Run();
+        this.Tools.sblob3.Run();
+        this.Tools.sblob4.Run();
+        this.Tools.sblob5.Run();
+        this.Tools.sblob6.Run();
+        this.Tools.sblob7.Run();
+        this.Tools.sblob8.Run();
+        this.Tools.sblob9.Run();
+        this.Tools.sblob10.Run();
+        this.Tools.sblob11.Run();
+        this.Tools.sblob12.Run();
+        
+        this.Tools.mblob1.Run();
+        this.Tools.mblob2.Run();
+        this.Tools.mblob3.Run();
+        this.Tools.mblob4.Run();
+        this.Tools.mblob5.Run();
+        this.Tools.mblob6.Run();
+        this.Tools.mblob7.Run();
+        this.Tools.mblob8.Run();
+        this.Tools.mblob9.Run();
+        this.Tools.mblob10.Run();
+        this.Tools.mblob11.Run();
+        this.Tools.mblob12.Run();
+        #endregion
+      
+        if(this.Tools.blob1.Results.GetBlobs().Count == 0
+          && this.Tools.blob2.Results.GetBlobs().Count == 0
+          && this.Tools.blob3.Results.GetBlobs().Count == 0
+          && this.Tools.blob4.Results.GetBlobs().Count == 0
+          && this.Tools.blob5.Results.GetBlobs().Count == 0
+          && this.Tools.blob6.Results.GetBlobs().Count == 0
+          && this.Tools.blob7.Results.GetBlobs().Count == 0
+          && this.Tools.blob8.Results.GetBlobs().Count == 0
+          && this.Tools.blob9.Results.GetBlobs().Count == 0
+          && this.Tools.blob10.Results.GetBlobs().Count == 0
+          && this.Tools.blob11.Results.GetBlobs().Count == 0
+          && this.Tools.blob12.Results.GetBlobs().Count == 0
+          && this.Tools.sblob1.Results.GetBlobs().Count == 0
+          && this.Tools.sblob2.Results.GetBlobs().Count == 0
+          && this.Tools.sblob3.Results.GetBlobs().Count == 0
+          && this.Tools.sblob4.Results.GetBlobs().Count == 0
+          && this.Tools.sblob5.Results.GetBlobs().Count == 0
+          && this.Tools.sblob6.Results.GetBlobs().Count == 0
+          && this.Tools.sblob7.Results.GetBlobs().Count == 0
+          && this.Tools.sblob8.Results.GetBlobs().Count == 0
+          && this.Tools.sblob9.Results.GetBlobs().Count == 0
+          && this.Tools.sblob10.Results.GetBlobs().Count == 0
+          && this.Tools.sblob11.Results.GetBlobs().Count == 0
+          && this.Tools.sblob12.Results.GetBlobs().Count == 0
+          && this.Tools.mblob1.Results.GetBlobs().Count == 0
+          && this.Tools.mblob2.Results.GetBlobs().Count == 0
+          && this.Tools.mblob3.Results.GetBlobs().Count == 0
+          && this.Tools.mblob4.Results.GetBlobs().Count == 0
+          && this.Tools.mblob5.Results.GetBlobs().Count == 0
+          && this.Tools.mblob6.Results.GetBlobs().Count == 0
+          && this.Tools.mblob7.Results.GetBlobs().Count == 0
+          && this.Tools.mblob8.Results.GetBlobs().Count == 0
+          && this.Tools.mblob9.Results.GetBlobs().Count == 0
+          && this.Tools.mblob10.Results.GetBlobs().Count == 0
+          && this.Tools.mblob11.Results.GetBlobs().Count == 0
+          && this.Tools.mblob12.Results.GetBlobs().Count == 0
+          )
+        {
+          //編號
+          PinNo.Text = "OK"; //PinNo
+          PinNo.X = 1500;  //文字X座標
+          PinNo.Y = 350;   //文字Y座標 
+          PinNo.Font = new Font("Times New Roman", 42); //字型,大小,字體(粗體/斜體/刪除線/底線)
+          myLabel_1.Add(PinNo.Copy(0)); //文字存入陣列
+          this.Outputs.Result = true;
+        }
+        else
+        {
+          //編號
+          PinNo.Text = "NG"; //PinNo
+          PinNo.X = 1500;  //文字X座標
+          PinNo.Y = 350;   //文字Y座標 
+          PinNo.Font = new Font("Times New Roman", 42); //字型,大小,字體(粗體/斜體/刪除線/底線)
+          myLabel_1.Add(PinNo.Copy(0)); //文字存入陣列
+        
+          this.Outputs.Result = false;
+          #region many getboundarytools
+        
+          for(i = 0;i < this.Tools.blob1.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob1.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.blob2.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob2.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.blob3.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob3.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.blob4.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob4.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.blob5.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob5.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.blob6.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob6.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.blob7.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob7.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.blob8.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob8.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.blob9.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob9.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.blob10.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob10.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.blob11.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob11.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.blob12.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.blob12.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          
+          //sblob
+          for(i = 0;i < this.Tools.sblob1.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob1.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.sblob2.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob2.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.sblob3.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob3.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.sblob4.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob4.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.sblob5.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob5.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.sblob6.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob6.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.sblob7.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob7.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.sblob8.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob8.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.sblob9.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob9.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.sblob10.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob10.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.sblob11.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob11.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.sblob12.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.sblob12.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+        
+          //mblob
+          for(i = 0;i < this.Tools.mblob1.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob1.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.mblob2.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob2.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.mblob3.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob3.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.mblob4.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob4.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.mblob5.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob5.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.mblob6.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob6.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.mblob7.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob7.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.mblob8.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob8.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.mblob9.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob9.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.mblob10.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob10.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.mblob11.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob11.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          for(i = 0;i < this.Tools.mblob12.Results.GetBlobs().Count;i++)
+            Arraylist_Region.Add(((Cognex.VisionPro.CogPolygon) this.Tools.mblob12.Results.GetBlobs()[i].GetBoundary()  ).Copy(0));
+          #endregion
+        }
+      }
+      else
+      {
+        
+        PinNo.Text = "定位失敗"; //PinNo
+        PinNo.X = 1200;  //文字X座標
+        PinNo.Y = 350;   //文字Y座標 
+        PinNo.Font = new Font("Times New Roman", 42); //字型,大小,字體(粗體/斜體/刪除線/底線)
+        myLabel_1.Add(PinNo.Copy(0)); //文字存入陣列
+        this.Outputs.Result = false;
+      }
+    }
+    else
+    {
+      this.Outputs.Result = true;
+    }
+    
+
+    return false;
+  }
+
+  #region When the Script is Initialized
+  /// <summary>
+  /// Perform any initialization required by your script here
+  /// </summary>
+  /// <param name="host">The host tool</param>
+  public override void Initialize(Cognex.VisionPro.ToolGroup.CogToolGroup host)
+  {
+    // DO NOT REMOVE - Call the base class implementation first - DO NOT REMOVE
+    base.Initialize(host);
+
+
+  }
+  #endregion
+
+  #region When the Last Run Record is Created
+  
+  public override void ModifyLastRunRecord(Cognex.VisionPro.ICogRecord lastRecord)
+  {
+    
+    CogToolBlock tbToAddGraphics = new CogToolBlock();
+    
+    foreach (CogPolygon RegionMarker in Arraylist_Region)
+    {
+      
+      RegionMarker.Color = CogColorConstants.Red;  //量測值NG顯示紅色CogPMAlignTool1
+      
+      RegionMarker.SelectedSpaceName = @"@\Fixture";
+      tbToAddGraphics.AddGraphicToRunRecord(RegionMarker, lastRecord, "CogIPOneImageTool1.InputImage", "script");
+      
+    }
+      
+    //顯示NO1編號
+    foreach (CogGraphicLabel RegionMarker in myLabel_1)
+    {
+      if(this.Outputs.Result == true)
+      {
+        RegionMarker.Color = CogColorConstants.Green;
+      }
+      else
+      {
+        RegionMarker.Color = CogColorConstants.Red; 
+      }
+      //RegionMarker.SelectedSpaceName = @"@\Fixture";    
+      tbToAddGraphics.AddGraphicToRunRecord(RegionMarker, lastRecord, "CogIPOneImageTool1.InputImage", "script");      
+      
+    } 
+   
+  }
+    
+ 
+    
+
+  #endregion
+}
+  
+
+#region auto-generated
+// ------------------------------------------------------------------------------
+//   <auto-generated>
+//      This code was generated by a tool.
+//      VisionPro Version: 8.3
+//      Generated: 2021/9/23 11:03:55
+//      Name: CogToolBlockScript, Version: 1.0
+//      Options:
+//                IncludeMainScriptClass,     OverrideGroupRun,          
+//                OverrideInitialize,         IncludeInputsAdapterClass, 
+//                IncludeOutputsAdapterClass, IncludeToolsAdapterClass,  
+//                ExposeToolBlockReference,   PlaceInAutoGeneratedRegion,
+//                AdapterClassIsEnumerable,   IncludeRunToolFunction    
+//  
+//      Changes to this code below this comment may cause incorrect behavior
+//      and will be lost if the code is regenerated.
+//   </auto-generated>
+// ------------------------------------------------------------------------------
+
+public class CogToolBlockAdvancedScript : CogToolBlockAdvancedScriptBase
+{
+  #region Private Member Variables
+  private Cognex.VisionPro.ToolBlock.CogToolBlock mToolBlock;
+  private CollectionAdapterInputs mInputs;
+  private CollectionAdapterOutputs mOutputs;
+  private CollectionAdapterTools mTools;
+  #endregion
+
+  /// <summary>
+  /// Called when the parent tool is run.
+  /// Add code here to customize or replace the normal run behavior.
+  /// </summary>
+  /// <param name="message">Sets the Message in the tool's RunStatus.</param>
+  /// <param name="result">Sets the Result in the tool's RunStatus</param>
+  /// <returns>True if the tool should run normally,
+  ///          False if GroupRun customizes run behavior</returns>
+  public override bool GroupRun(ref string message, ref CogToolResultConstants result)
+  {
+    // To let the execution stop in this script when a debugger is attached, uncomment the following lines.
+    // #if DEBUG
+    // if (System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Break();
+    // #endif
+
+
+    return false;
+  }
+
+  #region When the Script is Initialized
+  /// <summary>
+  /// Perform any initialization required by your script here
+  /// </summary>
+  /// <param name="host">The host tool</param>
+  public override void Initialize(Cognex.VisionPro.ToolGroup.CogToolGroup host)
+  {
+    // DO NOT REMOVE - Call the base class implementation first - DO NOT REMOVE
+    base.Initialize(host);
+
+    // Initialize convenience types for ToolBlock Inputs, Outputs, and Tools
+    this.mInputs = new CollectionAdapterInputs(((Cognex.VisionPro.ToolBlock.CogToolBlock)(host)));
+    this.mOutputs = new CollectionAdapterOutputs(((Cognex.VisionPro.ToolBlock.CogToolBlock)(host)));
+    this.mTools = new CollectionAdapterTools(((Cognex.VisionPro.ToolBlock.CogToolBlock)(host)));
+
+    // Store a local copy of the script host
+    this.mToolBlock = ((Cognex.VisionPro.ToolBlock.CogToolBlock)(host));
+  }
+  #endregion
+
+  /// <summary>
+  /// Access the Tool's Inputs through an adapter class
+  /// </summary>
+  public CollectionAdapterInputs Inputs
+  {
+    get
+    {
+      return this.mInputs;
+    }
+  }
+
+  /// <summary>
+  /// Access the Tool's Outputs through an adapter class
+  /// </summary>
+  public CollectionAdapterOutputs Outputs
+  {
+    get
+    {
+      return this.mOutputs;
+    }
+  }
+
+  /// <summary>
+  /// Access the Tool's Tools through an adapter class
+  /// </summary>
+  public CollectionAdapterTools Tools
+  {
+    get
+    {
+      return this.mTools;
+    }
+  }
+
+
+  #region Public Methods
+  /// <summary>
+  /// Called from a script to run a tool.
+  /// </summary>
+  /// <param name="tool">The tool to run.</param>
+  /// <param name="message">The RunStatus Message.</param>
+  /// <param name="result">The RunStatus Result.</param>
+  /// <exception cref="System.Exception">
+  /// Thrown when <paramref name="tool"/> returns and 
+  /// the calling tool's AbortRunOnToolFailure property is True.</exception>
+  protected virtual void RunTool(Cognex.VisionPro.ICogTool tool, ref string message, ref CogToolResultConstants result)
+  {
+    this.mToolBlock.RunTool(tool, ref message, ref result);
+  }
+  #endregion
+
+}
+
+#region Adapter Classes
+public class CollectionAdapterInputs
+{
+  private Cognex.VisionPro.ToolBlock.CogToolBlock mToolBlock;
+  public CollectionAdapterInputs(Cognex.VisionPro.ToolBlock.CogToolBlock toolBlock)
+  {
+    this.mToolBlock = toolBlock;
+  }
+  public Cognex.VisionPro.ICogImage OutputImage
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.ICogImage)(this.mToolBlock.Inputs["OutputImage"].Value));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Inputs.OutputImage"), ex);
+      }
+    }
+  }
+  public bool Empty
+  {
+    get
+    {
+      try
+      {
+        return ((bool)(this.mToolBlock.Inputs["Empty"].Value));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Inputs.Empty"), ex);
+      }
+    }
+  }
+}
+
+public class CollectionAdapterOutputs
+{
+  private Cognex.VisionPro.ToolBlock.CogToolBlock mToolBlock;
+  public CollectionAdapterOutputs(Cognex.VisionPro.ToolBlock.CogToolBlock toolBlock)
+  {
+    this.mToolBlock = toolBlock;
+  }
+  public bool Result
+  {
+    get
+    {
+      try
+      {
+        return ((bool)(this.mToolBlock.Outputs["Result"].Value));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Outputs.Result"), ex);
+      }
+    }
+    set
+    {
+      this.mToolBlock.Outputs["Result"].Value = value;
+    }
+  }
+  public object Output
+  {
+    get
+    {
+      try
+      {
+        return ((object)(this.mToolBlock.Outputs["Output"].Value));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Outputs.Output"), ex);
+      }
+    }
+    set
+    {
+      this.mToolBlock.Outputs["Output"].Value = value;
+    }
+  }
+}
+
+public class CollectionAdapterTools : System.Collections.IEnumerable
+{
+  private Cognex.VisionPro.ToolBlock.CogToolBlock mToolBlock;
+  public CollectionAdapterTools(Cognex.VisionPro.ToolBlock.CogToolBlock toolBlock)
+  {
+    this.mToolBlock = toolBlock;
+  }
+  public Cognex.VisionPro.ImageProcessing.CogIPOneImageTool CogIPOneImageTool1
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.ImageProcessing.CogIPOneImageTool)(this.mToolBlock.Tools["CogIPOneImageTool1"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.CogIPOneImageTool1"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.PMAlign.CogPMAlignTool CogPMAlignTool1
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.PMAlign.CogPMAlignTool)(this.mToolBlock.Tools["CogPMAlignTool1"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.CogPMAlignTool1"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.CalibFix.CogFixtureTool CogFixtureTool1
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.CalibFix.CogFixtureTool)(this.mToolBlock.Tools["CogFixtureTool1"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.CogFixtureTool1"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob1
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob1"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob1"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob2
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob2"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob2"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob3
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob3"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob3"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob4
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob4"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob4"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob5
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob5"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob5"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob6
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob6"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob6"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob7
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob7"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob7"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob8
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob8"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob8"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob9
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob9"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob9"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob10
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob10"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob10"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob11
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob11"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob11"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool blob12
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["blob12"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.blob12"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob1
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob1"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob1"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob2
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob2"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob2"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob3
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob3"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob3"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob4
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob4"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob4"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob5
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob5"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob5"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob6
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob6"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob6"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob7
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob7"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob7"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob8
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob8"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob8"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob9
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob9"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob9"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob10
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob10"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob10"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob11
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob11"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob11"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool sblob12
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["sblob12"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.sblob12"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob1
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob1"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob1"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob2
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob2"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob2"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob3
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob3"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob3"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob4
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob4"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob4"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob5
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob5"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob5"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob6
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob6"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob6"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob7
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob7"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob7"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob8
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob8"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob8"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob9
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob9"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob9"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob10
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob10"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob10"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob11
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob11"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob11"), ex);
+      }
+    }
+  }
+  public Cognex.VisionPro.Blob.CogBlobTool mblob12
+  {
+    get
+    {
+      try
+      {
+        return ((Cognex.VisionPro.Blob.CogBlobTool)(this.mToolBlock.Tools["mblob12"]));
+      }
+      catch (System.Exception ex)
+      {
+        throw new System.Exception(String.Format(Cognex.VisionPro.CogLocalizer.GetString(typeof(Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys), Cognex.VisionPro.ToolGroup.Resources.CogResourceKeys.RkScritptAdapterMemberAccessError), this.mToolBlock.Name, "Tools.mblob12"), ex);
+      }
+    }
+  }
+  public System.Collections.IEnumerator GetEnumerator()
+  {
+    return this.mToolBlock.Tools.GetEnumerator();
+  }
+}
+#endregion
+
+
+
+#endregion

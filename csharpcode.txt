@@ -1,0 +1,64 @@
+#params #20231218 
+static void Main(string[] args)
+ {
+     Sum("099",100,100,100,99);
+     void Sum(string id, params int[] score)
+     {
+         int sum = 0;
+         for (int i = 0; i < score.Length; i++)
+         {
+             sum += score[i];
+         }
+         Console.WriteLine("{0}{1}",id, sum);
+         Console.ReadLine();
+     }
+ }
+
+#ref #call by ref
+static void Main(string[] args)
+{
+    int a=10; int b=20;
+    Console.WriteLine(a); Console.WriteLine(b);
+    Switch(ref a, ref b);
+    Console.WriteLine(a); Console.WriteLine(b);
+    Console.ReadLine();
+    void Switch(ref int x,ref int y)
+    {
+        int temp = 0;
+        temp = x; x = y; y = temp;
+        
+    }
+}
+
+#input
+static void Main(string[] args)
+{
+   string x;
+    x = Console.ReadLine();
+    Console.WriteLine(x);
+    Console.ReadLine();
+    Console.ReadKey();
+    Console.ReadLine();
+}
+
+#out #call by out
+int a; int b;
+//Console.WriteLine(a); Console.WriteLine(b);
+Switch(out a, out b);
+Console.WriteLine(a); Console.WriteLine(b);
+Console.ReadLine();
+void Switch(out int x, out int y)
+{
+    int temp;
+    x = 20;
+    y = 30;
+    Console.WriteLine(x); Console.WriteLine(y);
+    temp = x; x = y; y = temp;
+
+}
+
+
+
+
+
+
